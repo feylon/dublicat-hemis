@@ -133,5 +133,5 @@ Bu loyiha [Litsenziya nomi] ostida litsenziyalangan.
 
 Loyiha muallifi: [Feylon]  
 Email: [jamshid14092002@manzilingiz]  
-GitHub: [Feylon](https://github.com/usernfeyloname)
+GitHub: [Feylon](https://github.com/feylon)
 
