@@ -23,7 +23,7 @@ Backend qismi Node.js va Express.js yordamida qurilgan va quyidagi texnologiyala
 
 1. Loyihani klon qiling:
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/feylon/dublicat-hemis.git
     ```
 
 2. Backend papkasiga o'ting:
@@ -70,38 +70,38 @@ Frontend qismi Vue 3 yordamida yaratilgan va quyidagi texnologiyalarni o'z ichig
 
 ## Loyihaning tuzilishi
 
-project-folder/
-│
-├── backend/
-│   ├── node_modules/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── config/
-│   ├── index.js
-│   ├── package.json
-│   └── ...
-│
-└── frontend/
-    ├── node_modules/
-    ├── src/
-    │   ├── assets/
-    │   ├── components/
-    │   ├── views/
-    │   ├── router/
-    │   ├── store/
-    │   ├── App.vue
-    │   ├── main.js
-    │   └── ...
-    ├── public/
-    ├── package.json
-    └── ...
+project-folder/ <br />
+│ <br />
+├── backend/  <br />
+│   ├── node_modules/  <br />
+│   ├── controllers/ <br />
+│   ├── models/ <br />
+│   ├── routes/ <br />
+│   ├── config/ <br />
+│   ├── index.js <br />
+│   ├── package.json <br />
+│   └── ... <br />
+│ <br />
+└── frontend/ <br />
+    ├── node_modules/ <br />
+    ├── src/ <br />
+    │   ├── assets/ <br />
+    │   ├── components/ <br />
+    │   ├── views/ <br />
+    │   ├── router/ <br />
+    │   ├── store/ <br />
+    │   ├── App.vue <br />
+    │   ├── main.js <br />
+    │   └── ... <br />
+    ├── public/ <br />
+    ├── package.json <br />
+    └── ... <br />
 
 ## Foydalanish
 
 1. Backend serverni ishga tushiring.
 2. Frontend serverni ishga tushiring.
-3. Brauzerda loyihani oching: [http://localhost:8080](http://localhost:8080).
+3. Brauzerda loyihani oching: [http://localhost:4100](http://localhost:4100).
 
 ## Hissa qo'shish
 
@@ -109,7 +109,7 @@ Agar siz loyiha rivojlanishiga hissa qo'shmoqchi bo'lsangiz, quyidagi qadamlarni
 
 1. Loyihani klon qiling:
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/feylon/dublicat-hemis.git
     ```
 2. O'zingizning branch-ingizni yarating:
     ```bash
@@ -131,7 +131,7 @@ Bu loyiha [Litsenziya nomi] ostida litsenziyalangan.
 
 ## Aloqa
 
-Loyiha muallifi: [Ismingiz]  
-Email: [email@manzilingiz]  
-GitHub: [GitHub profilingiz](https://github.com/username)
+Loyiha muallifi: [Feylon]  
+Email: [jamshid14092002@manzilingiz]  
+GitHub: [Feylon](https://github.com/usernfeyloname)
 
