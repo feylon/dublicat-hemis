@@ -73,29 +73,29 @@ Frontend qismi Vue 3 yordamida yaratilgan va quyidagi texnologiyalarni o'z ichig
 project-folder/
 │
 ├── backend/
-│ ├── node_modules/
-│ ├── controllers/
-│ ├── models/
-│ ├── routes/
-│ ├── config/
-│ ├── index.js
-│ ├── package.json
-│ └── ...
+│   ├── node_modules/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── config/
+│   ├── index.js
+│   ├── package.json
+│   └── ...
 │
 └── frontend/
-├── node_modules/
-├── src/
-│ ├── assets/
-│ ├── components/
-│ ├── views/
-│ ├── router/
-│ ├── store/
-│ ├── App.vue
-│ ├── main.js
-│ └── ...
-├── public/
-├── package.json
-
+    ├── node_modules/
+    ├── src/
+    │   ├── assets/
+    │   ├── components/
+    │   ├── views/
+    │   ├── router/
+    │   ├── store/
+    │   ├── App.vue
+    │   ├── main.js
+    │   └── ...
+    ├── public/
+    ├── package.json
+    └── ...
 
 ## Foydalanish
 
