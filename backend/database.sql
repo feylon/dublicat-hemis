@@ -250,8 +250,9 @@ id bigserial primary key,
 email varchar(500) not null unique,
 login varchar(500) not null unique,
 password varchar(500) not null,
-firstname varchar(500) not null,
-brithday DATE not null,
+firstname varchar(500),
+lastname varchar(500),
+brithday DATE,
 address varchar(500),
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 Parent_Name varchar(500),
@@ -261,12 +262,9 @@ check(course > 0 and course <= 5),
 viloyat_id integer,
 foreign key (viloyat_id) references  viloyat (id),
 tuman_id integer,
-foreign key (tuman_id) references  tuman (id));
-ALTER TABLE student
-ADD COLUMN state BOOLEAN DEFAULT true;
+foreign key (tuman_id) references  tuman (id),
+state BOOLEAN DEFAULT true);
 
-ALTER TABLE student
-ADD COLUMN lastname varchar(500);
 --  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
@@ -276,8 +274,9 @@ id bigserial primary key,
 email varchar(500) not null unique,
 login varchar(500) not null unique,
 password varchar(500) not null,
-firstname varchar(500) not null,
-brithday DATE not null,
+firstname varchar(500),
+lastname varchar(500),	
+brithday DATE,
 address varchar(500),
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 Parent_Name varchar(500),
@@ -288,8 +287,6 @@ foreign key (viloyat_id) references  viloyat (id),
 tuman_id integer,
 foreign key (tuman_id) references  tuman (id));
 
-ALTER TABLE teacher
-ADD COLUMN lastname varchar(500);
 
 INSERT INTO teacher (email, login, password, firstname, brithday, address, parent_name) VALUES
     ('ali@example.com', 'aliuser', 'pass123', 'Ali', '1980-02-14', '123 Main St', 'Vali'),
@@ -314,8 +311,9 @@ id bigserial primary key,
 email varchar(500) not null unique,
 login varchar(500) not null unique,
 password varchar(500) not null,
-firstname varchar(500) not null,
-brithday DATE not null,
+firstname varchar(500),
+lastname varchar(500),
+brithday DATE,
 address varchar(500),
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 Parent_Name varchar(500),
@@ -329,7 +327,5 @@ insert into dean (email, login, password, firstname, brithday) values
 ('jamshid14092002@gmail.com','jamshid14092002','$2b$10$qszd/we2sPerBlHoeUKageRfkVnM9T5LUndqxhgli3NmJdTHRhbOG', 'Jamshid', '14-09-2002');
 
 
-ALTER TABLE dean
-ADD COLUMN lastname varchar(500);
 
 -- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
