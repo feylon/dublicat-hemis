@@ -6,12 +6,13 @@
   "type": "module",
   "scripts": {
     "test": "node index",
-    "dev" : "node index"
+    "dev": "node index"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "connect-pg-simple": "^9.0.1",
     "cors": "^2.8.5",

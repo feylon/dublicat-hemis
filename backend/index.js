@@ -5,7 +5,9 @@ import dotenv from "dotenv";
 dotenv.config();
 // import files
 import pool  from "./functions/datatabase.js"
-import { release } from "os";
+import Dean from "./Routers/Dean/index.js";
+import region from "./functions/another/get_regions.js"
+
 
 global.pool = pool;
 
@@ -13,7 +15,7 @@ const app = express();
 
 // Middlewares
 app.use(express.static("./static"))
- 
+app.use(express.json())
 
 
 
@@ -27,12 +29,16 @@ try {
     console.log("Database error ", error);
 }
 
+// Routers
+ Dean.forEach(element =>{
+ app.use(`/dean${element.path}`, element.route);   
+ });
+ app.use("/viloyat",region)
+
+
+
 const server = http.createServer(app);
-
 let PORT = process.env.PORT;
-
-
-
 server.listen(PORT, ()=>{
     console.log(`${PORT}da tizim ishga tushdi`)
 })
