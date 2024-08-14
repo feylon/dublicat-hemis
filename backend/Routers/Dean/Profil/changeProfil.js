@@ -58,10 +58,12 @@ where id = $9`,
 
     res.send(req.body);
   } catch (error) {
-    if(error.code == '22008') return res.status(400).send({error : error.hint})
-    if(error.code == '23505') return res.status(400).send({error : error.detail})
+    if (error.code == "22008")
+      return res.status(400).send({ error: error.hint });
+    if (error.code == "23505")
+      return res.status(400).send({ error: error.detail });
 
-      console.log(error);
+    console.log(error);
   }
 });
 export default router;
