@@ -4,15 +4,14 @@ import Joi from "joi";
 
 const router = Router();
 
-router.post("/", checkToken, function (req, res) {
+router.post("/", checkToken, async function (req, res) {
   let Schema = Joi.object({
-    email: Joi.string().required().min(3).max(15),
-    login: Joi.string().required().min(3).max(15),
+    email: Joi.string().required().min(3).max(45),
     firstname: Joi.string().required().min(3).max(15),
     lastname: Joi.string().required().min(3).max(15),
-    brithday: Joi.date().required(),
-    address: Joi.string().required().min(3).max(15),
-    Parent_Name: Joi.string().required().min(3).max(15),
+    brithday: Joi.string().required(),
+    address: Joi.string().required().min(3).max(45),
+    Parent_Name: Joi.string().required().min(3).max(45),
     tumanId: Joi.number().min(1).max(225).required(),
     viloyatId: Joi.number().min(1).max(15).required(),
   });
@@ -21,7 +20,6 @@ router.post("/", checkToken, function (req, res) {
     return res.status(401).send({ error: checkSchema.error.message });
   const {
     email,
-    login,
     firstname,
     lastname,
     brithday,
@@ -31,8 +29,39 @@ router.post("/", checkToken, function (req, res) {
     viloyatId,
   } = req.body;
   try {
+    const adminId = get_id(req, res);
+    let data = await global.pool.query(
+      `update dean 
+set 
+email = $1,
+firstname = $2,
+lastname = $3,
+brithday = $4,
+address = $5,
+Parent_Name = $6,
+tuman_id = $7,
+viloyat_id = $8
+where id = $9`,
+
+      [
+        email,
+        firstname,
+        lastname,
+        brithday,
+        address,
+        Parent_Name,
+        tumanId,
+        viloyatId,
+        adminId,
+      ]
+    );
+
     res.send(req.body);
-    
-  } catch (error) {}
+  } catch (error) {
+    if(error.code == '22008') return res.status(400).send({error : error.hint})
+    if(error.code == '23505') return res.status(400).send({error : error.detail})
+
+      console.log(error);
+  }
 });
 export default router;
