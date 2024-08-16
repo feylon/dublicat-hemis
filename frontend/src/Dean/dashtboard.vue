@@ -1,10 +1,10 @@
 <template>
     <div class="bg-gray-200  overflow-hidden w-[100vw] h-[100vh]">
-        <div class="w-full h-[50px] flex justify-between items-center bg-gray-900">
-            <div class="text-white">
+        <div class="w-full sm:h-auto items-center flex-wrap flex flex-col justify-between items-center bg-gray-900">
+            <div class="sm:hidden text-white">
                 <span
-                    class="me-5 flex justify-center w-[240px]  block absolute text-white select-none text-[28px] flex items-center gap-1 top-[10px] left-[10px] font-semibold">
-                    <span class="text-[13px] rotate-45 duration-100"><i class="fas fa-square"></i></span>
+                    class="me-5 flex sm:hidden bg-red-600 sm:w-full md:w-auto md:hidden justify-center w-[240px]  block absolute  md:text-white select-none text-[28px] flex items-center gap-1 top-[10px] left-[10px] font-semibold">
+                    <span class="text-[13px] sm:hidden  rotate-45 duration-100  "><i class="fas fa-square"></i></span>
                     EMBLEMA
                 </span>
             </div>

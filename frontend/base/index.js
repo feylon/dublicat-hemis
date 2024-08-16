@@ -1,1 +1,1 @@
-export default {url : 'http://localhost:4100/'}
+export default  'http://localhost:4100/'

@@ -1,6 +1,7 @@
 import express from "express";
 import http from "http";
 import dotenv from "dotenv";
+import cors from "cors"
 
 dotenv.config();
 // import files
@@ -16,7 +17,7 @@ const app = express();
 // Middlewares
 app.use(express.static("./static"))
 app.use(express.json())
-
+app.use(cors());
 
 
 

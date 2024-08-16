@@ -1,46 +1,48 @@
 <template>
-    <!-- <RouterView>
-  
-  </RouterView> -->
-    <div class="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
-      <div class="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
-        <div class="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
-          <div>
-            <img
-              src="https://storage.googleapis.com/devitary-image-host.appspot.com/15846435184459982716-LogoMakr_7POjrN.png"
-              class="w-32 mx-auto" />
-          </div>
-          <div class="mt-12 flex flex-col items-center">
-            <h1 class="text-2xl xl:text-3xl font-extrabold">
-              Tizimga kirish
-            </h1>
-            <div class="w-full   flex-1 mt-14">
-              <div class="flex justify-center flex-col items-center">
-                
-              </div>
-  
-  
-              <div class="mx-auto max-w-xs">
-  
-                <n-input type="text" size="large" placeholder="Email"
-                  v-model:value="login"  
+  <div class="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
+    <div class="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
+      <div class="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
+        <div>
+          <img
+            src="https://storage.googleapis.com/devitary-image-host.appspot.com/15846435184459982716-LogoMakr_7POjrN.png"
+            class="w-32 mx-auto" />
+        </div>
+        <div class="mt-12 flex flex-col items-center">
+          <h1 class="text-2xl xl:text-3xl font-extrabold">
+            Tizimga kirish
+          </h1>
+          <div class="w-full   flex-1 mt-14">
+            <div class="flex justify-center flex-col items-center">
+
+            </div>
+
+
+            <div class="mx-auto max-w-xs">
+              <form @submit.prevent="loginfunc" method="post">
+                <n-input type="text" size="large" placeholder="Email" v-model:value="login"
                   class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white" />
-  
-                <n-input
-                v-model:value="password"
+
+                <n-input v-model:value="password"
                   class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                  type="password" show-password-on="mousedown" placeholder="Password" :maxlength="8" />
-  
-                <button 
+                  type="password" show-password-on="mousedown" placeholder="Password" :maxlength="18" />
+
+                <button type="submit" :disabled = 'disabled ? true:false'
+                :class = "disabled ?'bg-teal-200 animate-bounce hover:bg-teal-200':''"
                   class="mt-5 tracking-wide font-semibold bg-teal-500 text-gray-100 w-full py-4 rounded-lg hover:bg-teal-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
-                  <svg class="w-6 h-6 -ml-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                    <circle cx="8.5" cy="7" r="4" />
-                    <path d="M20 8v6M23 11h-6" />
-                  </svg>
                   <span class="ml-3">
-                    Sign Up
+                    <span v-if="disabled">
+                      <i class="fas fa-rotate animate-spin"></i>
+                      
+                    </span>
+                    <span class="flex gap-4  items-center" v-else>
+                      Kirish
+                      <svg class="w-6 h-6 -ml-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                        <circle cx="8.5" cy="7" r="4" />
+                        <path d="M20 8v6M23 11h-6" />
+                      </svg>
+                    </span>
                   </span>
                 </button>
                 <p class="mt-6 text-xs text-gray-600 text-center">
@@ -53,26 +55,72 @@
                     Privacy Policy
                   </a>
                 </p>
-              </div>
+              </form>
             </div>
           </div>
         </div>
-        <div class="flex-1 bg-indigo-100 text-center hidden lg:flex">
-          <div class="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
-            style="background-image: url('https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg');">
-          </div>
+      </div>
+      <div class="flex-1 bg-indigo-100 text-center hidden lg:flex">
+        <div
+          class="m-12 xl:m-16 w-full bg-[url('/15848031292911696601-undraw_designer_life_w96d.svg')] bg-contain bg-center bg-no-repeat">
         </div>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  import {useMessage} from "naive-ui"
-  import { RouterView } from 'vue-router';
-  const message = useMessage();
-  const login = ref(null);
-  const password = ref(null);
-  message.create("salom")
-  </script>
-  
+  </div>
+</template>
+
+<script setup>
+import url from "../../base/index"
+
+
+import { ref } from 'vue';
+import { useMessage } from "naive-ui"
+import { RouterView } from 'vue-router';
+import { useRouter } from "vue-router";
+const message = useMessage();
+const disabled = ref(false)
+const router = useRouter();
+const login = ref(null);
+const password = ref(null);
+async function loginfunc() {
+  console.log(login.value, password.value)
+  if (!password.value && !password.value)
+    return message.warning("Formani to'ldiring")
+  if (password.value.length < 3 && login.value.length < 3)
+    return message.warning("3 ta belgidan ko'p bo'lishi lozim")
+    disabled.value = true;
+
+  login.value = login.value.trim();
+  password.value = password.value.trim();
+  try {
+    let backend = await fetch(`${url}dean/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify({
+        login: login.value,
+        password: password.value
+      })
+    });
+    if (backend.status == 200) {
+      backend = await backend.json();
+      localStorage.setItem('token', backend.token);
+      router.push("/dean");
+      login.value = '';
+      password.value = '';
+      
+    }
+    else {
+      disabled.value = false;
+      message.error("Login yoki parol xato");
+      login.value = '';
+      password.value = '';
+      return;
+    }
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+</script>
