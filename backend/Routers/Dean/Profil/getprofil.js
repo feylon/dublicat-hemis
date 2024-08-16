@@ -1,14 +1,13 @@
 import { Router } from "express";
-import {checkToken, get_id} from "../../../functions/jwtDean.js";
-
+import { checkToken, get_id } from "../../../functions/jwtDean.js";
 
 const router = Router();
 
-router.get("/", checkToken, async function(req, res){
-
-    try {
+router.get("/", checkToken, async function (req, res) {
+  try {
     let deanId = get_id(req, res);
-    let data = await global.pool.query(`
+    let data = await global.pool.query(
+      `
         select 
 dean.email,
 dean.login,
@@ -26,15 +25,15 @@ dean.tuman_id
 from dean
 inner join viloyat on viloyat.id = dean.viloyat_id
 inner join tuman on tuman.id = dean.tuman_id
-where dean.id = $1`,[deanId]);
+where dean.id = $1`,
+      [deanId]
+    );
 
-
-    res.status(200).send(data.rows[0])
-    } catch (error) {
-        console.log(error);
-        res.status(500).send({error : "Server error"})
-    }
-    
+    res.status(200).send(data.rows[0]);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: "Server error" });
+  }
 });
 
 export default router;
