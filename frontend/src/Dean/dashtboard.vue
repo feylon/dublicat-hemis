@@ -28,10 +28,9 @@
                 <div class="h-full w-[200px] cursor-pointer me-4">
                     <n-dropdown trigger="hover" :options="options" @select="handleSelect">
                         <div class="h-full ps-3 flex items-center w-full border-s-[1px]">
-                            <img :src="`${url}/${data.profil_url}`"
-                                class="w-[40px] h-[40px] rounded-[50%]" alt="">
+                            <img :src="`${url}/${data.profil_url}`" class="w-[40px] h-[40px] rounded-[50%]" alt="">
                             <div class="flex flex-col">
-                                <span class="text-white font-bold ps-3">{{data.lastname}} {{data.firstname}}</span>
+                                <span class="text-white font-bold ps-3">{{ data.lastname }} {{ data.firstname }}</span>
                                 <span class="text-white text-[12px] text-center">Admin</span>
                             </div>
                         </div>
@@ -60,41 +59,170 @@
         </n-layout>
     </div>
 
+
+    <n-modal v-model:show="showModal" class="custom-card" preset="card" :style="bodyStyle"
+        title=" Profil rasmini o'zgartirish" :bordered="false" size="huge" :segmented="segmented">
+        <template #header-extra>
+
+        </template>
+        <form @submit.prevent="handleSubmit">
+            <label for="picture">
+                <div v-if="!showsend" class="w-[500px] cursor-pointer flex justify-center text-teal-500">
+                    <i class="fas fa-cloud-arrow-up text-[40px] text-center"></i>
+                </div>
+            </label>
+            <input type="file" id="picture" class="hidden" accept="image/*" @change="handleFileChange" />
+
+            <img v-if="imageUrl" class="w-[300px] h-[300px] block mx-auto rounded-[50%]" :src="imageUrl" alt="">
+            <div class='flex w-[600px] mx-auto mt-3 justify-around items-baseline'>
+
+
+
+                <label for="picture">
+                    <div v-if="showsend" id="bt"
+                        class="rounded pe-3 ps-3 px-5 py-3 min-w-max overflow-hidden shadow  relative bg-teal-500 text-white hover:bg-opacity-90">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                </label>
+
+                <button v-if="showsend" type="submit" id="bt"
+                    class="rounded px-5 py-3 min-w-max overflow-hidden shadow block relative bg-teal-500 text-white hover:bg-opacity-90">
+                    Almashtirish
+                </button>
+
+            </div>
+        </form>
+        <template #footer>
+            ###
+        </template>
+    </n-modal>
 </template>
 
 <script setup>
 import { ref, h, onUnmounted, onMounted } from 'vue';
 import url from "../../base"
-
-console.log(url)
 import { RouterLink, useRouter } from "vue-router";
 import { useMessage } from "naive-ui";
 import { v4 as uuidv4 } from 'uuid';
 
+let bodyStyle = {
+    width: "600px"
+};
+let segmented = {
+    content: "soft",
+    footer: "soft"
+};
+let showModal = ref(false)
+    ;
+
+let sendfile = ref(null);
+let form;
+const imageUrl = ref(null);
+let showsend = ref(false)
+const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    sendfile.value = event.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+        form = new FormData();
+        form.append('image', file);
+        showsend.value = true;
+        const reader = new FileReader();
+        reader.onload = () => {
+            imageUrl.value = reader.result;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        message.error('Please select a valid image file.');
+        event.target.value = '';
+    }
+};
+
+const handleSubmit = async () => {
+    let token = localStorage.token;
+    if (showsend.value) {
+
+
+
+
+
+        let backend = await fetch(`${url}dean/changephotos`, {
+            method: "POST",
+            headers: {
+                '-x-token': token
+            },
+            body: form
+        });
+        if (backend.status == 200) {
+            showsend.value = false;
+            imageUrl.value = null;
+            showModal.value = false;
+            getProfil();
+            return;
+        }
+        if (backend.status == 401) return router.push('/dean/login');
+        if (backend.status == 400) {
+            backend = await backend.json();
+
+
+            message.error(backend.error);
+
+            return;
+        }
+        imageUrl.value = null;
+        backend = await backend.json();
+
+        showsend.value = false;
+    } else {
+        message.error('No image selected.');
+    }
+};
+
+
+
+
+
+
+
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
 let data = ref({
-    profil_url : '',
-    lastname : '',
-    firstname : ''
+    profil_url: '',
+    lastname: '',
+    firstname: ''
 })
 const router = useRouter();
-async function getProfil (){
+async function getProfil() {
+    data.value = ({
+        profil_url: '',
+        lastname: '',
+        firstname: ''
+    })
     let token = localStorage.token;
- let backend = await fetch(`${url}dean/getprofile`,{
-    method : "GET",
-    headers : {
-        "Content-Type": "application/json; charset=utf-8",
-        '-x-token' : token
-    }
- });
+    let backend = await fetch(`${url}dean/getprofile`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            '-x-token': token
+        }
+    });
 
- if(backend.status == 401) return router.push('/dean/login');
- if(backend.status == 200){
-    data.value = await backend.json();
-    console.log(data.value)
+    if (backend.status == 401) return router.push('/dean/login');
+    if (backend.status == 200) {
+        data.value = await backend.json();
+        console.log(data.value)
     }
 }
 onMounted(async () => {
-   getProfil() 
+    getProfil()
 });
 let toggle = ref('uz');
 let options_lang = [{ label: "O'zb", key: "uz" }, { label: "En", key: 'en' }];
@@ -364,13 +492,14 @@ const options = ref([
                 ),
                 h("div",
                     { class: "text-black ps-3" },
-                    { default: () => "Profil rasmini yangilash" }
+                    // { innerHTML: () => "Profil rasmini yangilash" },
+                    [h("label", { innerHTML: "Profil rasmini yangilash" }, { class: "text-red-600 ps-3" })]
                 )
             ])
         },
         props: {
             onClick: () => {
-                console.log("salom")
+                showModal.value = true;
             }
         }
     },
@@ -416,8 +545,7 @@ function handleSelect(key) {
 
 ::-webkit-scrollbar-track {
     border: 1px solid white;
-    /* border color does not support transparent on scrollbar */
-    /* border-color: transparent; */
+
     background-color: #b2bec3;
 }
 

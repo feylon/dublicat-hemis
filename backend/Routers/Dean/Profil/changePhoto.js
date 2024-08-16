@@ -36,7 +36,7 @@ const upload = multer({
 
 router.post("/", [checkToken, upload.single("image")], async (req, res) => {
   const adminId = get_id(req, res);
-
+  // if(!req.body.file.url) return res.status(400).send({error : err.message})
   try {
     let fileurl = await global.pool.query(
       "Select profil_url from  dean where id = $1",
@@ -63,9 +63,9 @@ router.post("/", [checkToken, upload.single("image")], async (req, res) => {
 
 router.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
-    return res.status(400).send(err.message);
+    return res.status(400).send({error : err.message});
   } else if (err) {
-    res.status(400).send(err.message);
+    res.status(400).send({error : err.message});
   }
 });
 export default router;
