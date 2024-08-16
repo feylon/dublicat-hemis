@@ -5,7 +5,7 @@
                 <span
                     class="me-5 flex justify-center w-[240px]  block absolute text-white select-none text-[28px] flex items-center gap-1 top-[10px] left-[10px] font-semibold">
                     <span class="text-[13px] rotate-45 duration-100"><i class="fas fa-square"></i></span>
-                    Airleet
+                    EMBLEMA
                 </span>
             </div>
 
@@ -20,7 +20,7 @@
                 </n-dropdown>
                 <n-dropdown trigger="hover" :options="options_lang" @select="changeLang">
                     <n-button>
-                        <img :src="toggle == 'uz' ? '../../../public/1670868198_grizly-club-p-flag-uzbekistana-png-9.png' : '../../../public/EM7LidKw8aA.jpg'"
+                        <img :src="toggle == 'uz' ? '/1670868198_grizly-club-p-flag-uzbekistana-png-9.png' : '/EM7LidKw8aA.jpg'"
                             class="w-[25px]" lt="">
                     </n-button>
                 </n-dropdown>
@@ -111,9 +111,9 @@ const menuOptions = [
                 label: () => h(
                     RouterLink,
                     {
-                        to: "/admin/Add_worker"
+                        to: "/dean/Add_worker"
                     },
-                    { default: () => t('addWorker') }),
+                    { default: () => ('addWorker') }),
                 key: "addWorker",
                 icon: renderIconSpan("group_add")
             },
@@ -121,7 +121,7 @@ const menuOptions = [
                 label: () => h(
                     RouterLink,
                     {
-                        to: "/admin/issues"
+                        to: "/dean/issues"
                     },
                     { default: () => "Davomat olish" }),
                 key: "issues ",
@@ -141,7 +141,7 @@ const menuOptions = [
                 label: () => h(
                     RouterLink,
                     {
-                        to: "/admin/login"
+                        to: "/dean/login"
                     },
                     { default: () => "Jurnal" }),
                 key: "Jurnal",
@@ -151,7 +151,7 @@ const menuOptions = [
                 label: () => h(
                     RouterLink,
                     {
-                        to: "/admin/login"
+                        to: "/dean/login"
                     },
                     { default: () => "Topshiriqlar" }),
                 key: "Topshiriqlar",
@@ -169,7 +169,7 @@ const menuOptions = [
                 label: () => h(
                     RouterLink,
                     {
-                        to: "/admin/login"
+                        to: "/dean/login"
                     },
                     { default: () => "Kirish tarixi" }),
                 key: "Kirish tarixi",
@@ -180,7 +180,7 @@ const menuOptions = [
                 label: () => h(
                     RouterLink,
                     {
-                        to: "/admin/login"
+                        to: "/dean/login"
                     },
                     { default: () => "Profil" }),
                 key: "Profil",
@@ -198,7 +198,7 @@ const menuOptions = [
                 label: () => h(
                     RouterLink,
                     {
-                        to: "/admin/login"
+                        to: "/dean/login"
                     },
                     { default: () => "Kontrakt" }),
                 key: "kontrakt",
@@ -209,7 +209,7 @@ const menuOptions = [
                 label: () => h(
                     RouterLink,
                     {
-                        to: "/admin/login"
+                        to: "/dean/login"
                     },
                     { default: () => "Kutubxona" }),
                 key: "payment_for_book",
@@ -228,7 +228,7 @@ const menuOptions = [
                 label: () => h(
                     RouterLink,
                     {
-                        to: "/admin/login"
+                        to: "/dean/login"
                     },
                     { default: () => "Kutubxona" }),
                 key: ""
@@ -369,7 +369,7 @@ const options = ref([
         },
         props: {
             onClick: () => {
-                router.push("/admin/admin/login")
+                router.push("/dean/login")
             }
         }
     }
