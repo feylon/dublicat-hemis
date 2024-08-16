@@ -1,11 +1,11 @@
 <template>
     <div class="bg-gray-200  overflow-hidden w-[100vw] h-[100vh]">
-        <div class="w-full sm:h-auto items-center flex-wrap flex flex-col justify-between items-center bg-gray-900">
-            <div class="sm:hidden text-white">
+        <div class="w-full h-[50px] flex justify-between items-center bg-gray-900">
+            <div class="text-white">
                 <span
-                    class="me-5 flex sm:hidden bg-red-600 sm:w-full md:w-auto md:hidden justify-center w-[240px]  block absolute  md:text-white select-none text-[28px] flex items-center gap-1 top-[10px] left-[10px] font-semibold">
-                    <span class="text-[13px] sm:hidden  rotate-45 duration-100  "><i class="fas fa-square"></i></span>
-                    EMBLEMA
+                    class="me-5 flex justify-center w-[240px]  block absolute text-white select-none text-[28px] flex items-center gap-1 top-[10px] left-[10px] font-semibold">
+                    <span class="text-[13px] rotate-45 duration-100"><i class="fas fa-square"></i></span>
+                    {{ ('Airleet') }}
                 </span>
             </div>
 
@@ -28,10 +28,10 @@
                 <div class="h-full w-[200px] cursor-pointer me-4">
                     <n-dropdown trigger="hover" :options="options" @select="handleSelect">
                         <div class="h-full ps-3 flex items-center w-full border-s-[1px]">
-                            <img src="https://07akioni.oss-cn-beijing.aliyuncs.com/demo1.JPG"
-                                class="w-[50px] rounded-[50%]" alt="">
+                            <img :src="`${url}/${data.profil_url}`"
+                                class="w-[40px] h-[40px] rounded-[50%]" alt="">
                             <div class="flex flex-col">
-                                <span class="text-white font-bold ps-3">Ergashev Jamshid</span>
+                                <span class="text-white font-bold ps-3">{{data.lastname}} {{data.firstname}}</span>
                                 <span class="text-white text-[12px] text-center">Admin</span>
                             </div>
                         </div>
@@ -63,18 +63,42 @@
 </template>
 
 <script setup>
-import { ref, h } from 'vue';
+import { ref, h, onUnmounted, onMounted } from 'vue';
+import url from "../../base"
 
-
-
+console.log(url)
 import { RouterLink, useRouter } from "vue-router";
 import { useMessage } from "naive-ui";
 import { v4 as uuidv4 } from 'uuid';
 
+let data = ref({
+    profil_url : '',
+    lastname : '',
+    firstname : ''
+})
+const router = useRouter();
+async function getProfil (){
+    let token = localStorage.token;
+ let backend = await fetch(`${url}dean/getprofile`,{
+    method : "GET",
+    headers : {
+        "Content-Type": "application/json; charset=utf-8",
+        '-x-token' : token
+    }
+ });
 
+ if(backend.status == 401) return router.push('/dean/login');
+ if(backend.status == 200){
+    data.value = await backend.json();
+    console.log(data.value)
+    }
+}
+onMounted(async () => {
+   getProfil() 
+});
 let toggle = ref('uz');
 let options_lang = [{ label: "O'zb", key: "uz" }, { label: "En", key: 'en' }];
-const router = useRouter();
+
 let delete1 = ref(0);
 let notification = ref(0);
 let notification_list = ref([]);
@@ -253,15 +277,15 @@ const options = ref([
                     h("img", {
                         round: true,
                         style: "margin-right: 8px;",
-                        src: 'https://07akioni.oss-cn-beijing.aliyuncs.com/demo1.JPG',
+                        src: `${url}/${data.value.profil_url}`,
                         class: "w-[60px] rounded-md m-3",
-                        title: `Ergashev Jamshid`
+                        title: `${data.value.lastname} ${data.value.firstname}`
                     }),
 
                     h('div',
                         [
                             h("div", { class: "text-[13px] font-bold" }, h("div",
-                                { innerHTML: `Ergashev Jamshid` }
+                                { innerHTML: `${data.value.lastname} ${data.value.firstname}` }
                             )),
 
                             h("div", { class: "text-[13px] text-center" }, h("div",
