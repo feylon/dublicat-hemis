@@ -77,6 +77,8 @@ import { ref } from 'vue';
 import { useMessage } from "naive-ui"
 import { RouterView } from 'vue-router';
 import { useRouter } from "vue-router";
+import { Dean } from "../../Pinia/index.js";
+
 const message = useMessage();
 const disabled = ref(false)
 const router = useRouter();
@@ -106,6 +108,10 @@ async function loginfunc() {
     if (backend.status == 200) {
       backend = await backend.json();
       localStorage.setItem('token', backend.token);
+      let store = Dean();
+// await store.getProfil();
+(async()=>{await store.getProfil();})()
+console.log(store.profile);
       router.push("/dean");
       login.value = '';
       password.value = '';

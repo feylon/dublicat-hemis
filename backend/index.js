@@ -13,11 +13,11 @@ import region from "./functions/another/get_regions.js"
 global.pool = pool;
 
 const app = express();
+app.use(cors());
 
 // Middlewares
 app.use(express.static("./static"))
 app.use(express.json())
-app.use(cors());
 
 
 

@@ -6,7 +6,7 @@ const router = Router();
 
 router.post("/", checkToken, async function (req, res) {
   let Schema = Joi.object({
-    email: Joi.string().required().min(3).max(45),
+    email: Joi.string().email().required().min(3).max(45),
     firstname: Joi.string().required().min(3).max(15),
     lastname: Joi.string().required().min(3).max(15),
     brithday: Joi.string().required(),
@@ -17,7 +17,7 @@ router.post("/", checkToken, async function (req, res) {
   });
   let checkSchema = Schema.validate(req.body);
   if (checkSchema.error)
-    return res.status(401).send({ error: checkSchema.error.message });
+    return res.status(400).send({ error: checkSchema.error.message });
   const {
     email,
     firstname,

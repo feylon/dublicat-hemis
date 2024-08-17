@@ -104,6 +104,8 @@ import url from "../../base"
 import { RouterLink, useRouter } from "vue-router";
 import { useMessage } from "naive-ui";
 import { v4 as uuidv4 } from 'uuid';
+import { Dean } from "../../Pinia/index.js";
+let store = Dean();
 
 let bodyStyle = {
     width: "600px"
@@ -201,28 +203,11 @@ let data = ref({
 })
 const router = useRouter();
 async function getProfil() {
-    data.value = ({
-        profil_url: '',
-        lastname: '',
-        firstname: ''
-    })
-    let token = localStorage.token;
-    let backend = await fetch(`${url}dean/getprofile`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            '-x-token': token
-        }
-    });
-
-    if (backend.status == 401) return router.push('/dean/login');
-    if (backend.status == 200) {
-        data.value = await backend.json();
-        console.log(data.value)
-    }
+ await   store.getProfil();
+    data.value =  store.profile;
 }
 onMounted(async () => {
-    getProfil()
+    await getProfil();
 });
 let toggle = ref('uz');
 let options_lang = [{ label: "O'zb", key: "uz" }, { label: "En", key: 'en' }];
@@ -389,9 +374,6 @@ const menuOptions = [
     }
 ];
 
-
-
-
 const message = useMessage();
 
 const options = ref([
@@ -475,7 +457,7 @@ const options = ref([
         },
         props: {
             onClick: () => {
-                console.log("salom")
+                router.push('/dean/editprofil')
             }
         }
     },
