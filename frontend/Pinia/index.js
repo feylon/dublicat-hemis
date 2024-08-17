@@ -28,7 +28,9 @@ const Dean = defineStore('counter', {
             }
         });
     
-        if (backend.status == 401) return window.location.href = '/dean/login';
+        if (backend.status == 401) {
+          //  window.location.href = '/dean/login';
+           return  401;}
         if (backend.status == 200) {
             backend = await backend.json();
             this.profile = backend;

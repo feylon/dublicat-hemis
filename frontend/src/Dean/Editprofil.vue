@@ -13,19 +13,20 @@
     <div class="flex xl:w-[1200px] items-center flex-col">
         <div class="justify-between w-[90%] mx-auto flex sm:flex-col md:flex-row">
             <div class="flex gap-3 w-[300px] items-center">
-            <label for="email"><span class="text-[17px] items-center font-bold">Email</span></label>
-            <n-input id='email' placeholder="Emailni kiriting" maxlength="45" clearable v-model:value="formRef.email" />
+                <label for="email"><span class="text-[17px] items-center font-bold">Email</span></label>
+                <n-input id='email' placeholder="Emailni kiriting" maxlength="45" clearable
+                    v-model:value="formRef.email" />
 
-        </div>
+            </div>
 
 
 
-        <div class="flex gap-3 w-[300px] mt-3 items-center">
-            <label for="email"><span class="text-[17px] font-bold">Ismi</span></label>
-            <n-input id='email' placeholder="Ismni kiriting" maxlength="15" clearable
-                v-model:value="formRef.firstname" />
+            <div class="flex gap-3 w-[300px] mt-3 items-center">
+                <label for="email"><span class="text-[17px] font-bold">Ismi</span></label>
+                <n-input id='email' placeholder="Ismni kiriting" maxlength="15" clearable
+                    v-model:value="formRef.firstname" />
 
-        </div>
+            </div>
         </div>
 
 
@@ -35,17 +36,17 @@
             <div class="flex gap-3 w-[300px] mt-3 items-center">
                 <label for="email"><span class="text-[17px] font-bold">Familiyasi</span></label>
                 <n-input id='email' placeholder="Familiyani kiriting" maxlength="15" clearable
-                v-model:value="formRef.lastname" />
-                
+                    v-model:value="formRef.lastname" />
+
             </div>
-            
-            
-            
+
+
+
             <div class="flex gap-3 w-[300px] mt-3 items-center">
                 <label for="email"><span class="text-[17px] font-bold">Tug'ilgan kuni</span></label>
                 <n-date-picker v-model:value="formRef.brithday" type="date" />
             </div>
-            
+
         </div>
 
 
@@ -55,15 +56,15 @@
             <div class="flex gap-3 w-[300px] mt-3 items-center">
                 <label for="email"><span class="text-[17px] font-bold">Otasining ismi</span></label>
                 <n-input id='email' placeholder="Familiyani kiriting" maxlength="15" clearable
-                v-model:value="formRef.Parent_Name" />
-                
+                    v-model:value="formRef.Parent_Name" />
+
             </div>
-            
-            
+
+
             <div class="flex gap-5 w-[300px] mt-3 items-center">
                 <label for="email"><span class="text-[17px] font-bold">Uy manzili</span></label>
                 <n-input id='email' placeholder="Uy manzilini kiriting" maxlength="45" clearable
-                v-model:value="formRef.address" />
+                    v-model:value="formRef.address" />
 
             </div>
         </div>
@@ -75,23 +76,23 @@
 
             <div class="flex gap-5 w-[300px] mt-3 items-center">
                 <label for="email"><span class="text-[17px] font-bold">Viloyat</span></label>
-                
+
                 <n-select v-model:value="formRef.viloyatId" :options="viloyatList" />
             </div>
-            
-            
-            
+
+
+
             <div class="flex gap-5 w-[300px] mt-3 items-center">
                 <label for="email"><span class="text-[17px] font-bold">Tuman</span></label>
-                
+
                 <n-select :disabled="formRef.viloyatId ? false : true" v-model:value="formRef.tumanId"
-                :options="tumanList" />
+                    :options="tumanList" />
             </div>
         </div>
-<div class="flex justify-end w-[90%] mt-4">
-    <n-button @click='submit(formRef)'>Saqlash</n-button>
+        <div class="flex justify-end w-[90%] mt-4">
+            <n-button @click='submit(formRef)'>Saqlash</n-button>
 
-</div>
+        </div>
     </div>
 
 
@@ -104,7 +105,7 @@ import { useMessage } from "naive-ui"
 import url from "../../base"
 import { Dean } from "../../Pinia/index.js";
 let store = Dean();
-// await store.getProfil();
+
 
 
 
@@ -144,22 +145,22 @@ onMounted(async () => {
     }
 
     await store.getProfil();
-formRef.value.email = store.profile.email;
-formRef.value.firstname = store.profile.firstname;
-formRef.value.lastname = store.profile.lastname;
-formRef.value.address = store.profile.address;
-formRef.value.Parent_Name = store.profile.parent_name ;
-formRef.value.viloyatId = store.profile.viloyat_id
-formRef.value.tumanId = store.profile.tuman_id;
-formRef.value.brithday = new Date(store.profile.brithday).getTime()
+    formRef.value.email = store.profile.email;
+    formRef.value.firstname = store.profile.firstname;
+    formRef.value.lastname = store.profile.lastname;
+    formRef.value.address = store.profile.address;
+    formRef.value.Parent_Name = store.profile.parent_name;
+    formRef.value.viloyatId = store.profile.viloyat_id
+    formRef.value.tumanId = store.profile.tuman_id;
+    formRef.value.brithday = new Date(store.profile.brithday).getTime()
 });
 
 
 watch(
     () => formRef.value.viloyatId,
     async (id, oldValue) => {
-        if(id != store.profile.viloyat_id)
-        formRef.value.tumanId = null;
+        if (id != store.profile.viloyat_id)
+            formRef.value.tumanId = null;
         let backend = await fetch(`${url}viloyat/${id}`);
         if (backend.status == 200) {
             backend = await backend.json();
@@ -205,7 +206,7 @@ async function submit(e) {
         },
         body: JSON.stringify(body)
     });
-    if (backend.status == 200){store.getProfil(); return message.success("O'zgartirildi");}
+    if (backend.status == 200) { store.getProfil(); return message.success("O'zgartirildi"); }
     if (backend.status == 401) return window.location.href = '/dean/login';
 
     if (backend.status == 400) {

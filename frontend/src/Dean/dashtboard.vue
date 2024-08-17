@@ -203,8 +203,10 @@ let data = ref({
 })
 const router = useRouter();
 async function getProfil() {
- await   store.getProfil();
-    data.value =  store.profile;
+ let status = await store.getProfil();
+ if(status == 401) router.push('/dean/login')
+ console.log(status)   
+ data.value =  store.profile;
 }
 onMounted(async () => {
     await getProfil();
