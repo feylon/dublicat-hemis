@@ -18,7 +18,16 @@ app.use(cors());
 // Middlewares
 app.use(express.static("./static"))
 app.use(express.json())
-
+app.use((err, req, res, next) => {
+    if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+        return res.status(400).json({
+            status: 400,
+            message: 'Bad JSON format',
+            error: err.message
+        });
+    }
+    next(err); 
+});
 
 
 // database connect

@@ -245,25 +245,26 @@ INSERT INTO tuman (id, viloyat_id, name_uz, name_oz, name_ru) VALUES
 
 
 -- Student
-create table student (
-id bigserial primary key,
-email varchar(500) not null unique,
-login varchar(500) not null unique,
-password varchar(500) not null,
-firstname varchar(500),
-lastname varchar(500),
-brithday DATE,
-address varchar(500),
-created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-Parent_Name varchar(500),
-profil_url varchar(500),
-course 	integer,
-check(course > 0 and course <= 5),
-viloyat_id integer,
-foreign key (viloyat_id) references  viloyat (id),
-tuman_id integer,
-foreign key (tuman_id) references  tuman (id),
-state BOOLEAN DEFAULT true);
+CREATE TABLE student (
+    id bigserial PRIMARY KEY,
+    email varchar(500) NOT NULL UNIQUE,
+    login varchar(500) NOT NULL UNIQUE,
+    password varchar(500) NOT NULL,
+    firstname varchar(500),
+    lastname varchar(500),
+    brithday DATE CHECK (brithday <= CURRENT_DATE AND brithday > '1920-01-01'),
+    address varchar(500),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Parent_Name varchar(500),
+    profil_url varchar(500),
+    course integer CHECK (course > 0 AND course <= 5),
+    viloyat_id integer,
+    FOREIGN KEY (viloyat_id) REFERENCES viloyat (id),
+    tuman_id integer,
+    FOREIGN KEY (tuman_id) REFERENCES tuman (id),
+    state BOOLEAN DEFAULT true,
+	active BOOLEAN DEFAULT true
+);
 
 --  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
