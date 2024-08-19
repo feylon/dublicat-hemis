@@ -12,6 +12,7 @@ import changepassword from "./Profil/changepassword.js";
 
 import addstudent from "./Cors Student/addStudent.js";
 import editstudent from "./Cors Student/editStudent.js";
+import deletestudent from "./Cors Student/deleteStudent.js"
 
 export default [
   { path: "/login", route: login },
@@ -21,4 +22,5 @@ export default [
   { path: "/changepassword", route: changepassword },
   { path: "/addstudent", route: addstudent },
   { path: "/editstudent", route: editstudent },
+  {path : "/deletestudent", route : deletestudent}
 ];
