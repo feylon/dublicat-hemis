@@ -1,27 +1,14 @@
 import { Router } from "express";
 import { checkToken } from "../../../functions/jwtDean.js";
 import Joi from "joi";
-import { joiPasswordExtendCore } from "joi-password";
-import { hash } from "../../../functions/bcrypt.js";
 
-const joiPassword = Joi.extend(joiPasswordExtendCore);
 
 const router = Router();
 
-router.post("/", checkToken, async (req, res) => {
+router.post("/:id", checkToken, async (req, res) => {
   const Schema = Joi.object({
     email: Joi.string().email().required(),
     login: Joi.string().min(3).max(16).required(),
-    password: joiPassword
-      .string()
-      .minOfSpecialCharacters(1)
-      .minOfLowercase(2)
-      .minOfUppercase(1)
-      .minOfNumeric(2)
-      .noWhiteSpaces()
-      .onlyLatinCharacters()
-      .doesNotInclude(["password"])
-      .required(),
     firstname: Joi.string().min(3).max(10),
     lastname: Joi.string().min(3).max(10),
     brithday: Joi.string().required(),
@@ -30,7 +17,9 @@ router.post("/", checkToken, async (req, res) => {
     tumanId: Joi.number().min(15).max(225).required(),
     viloyatId: Joi.number().integer().min(1).max(15).required(),
     course: Joi.number().min(1).max(5).required(),
-  });
+    active : Joi.boolean().required(),
+    
+});
 
   let checkSchema = Schema.validate(req.body);
   if (checkSchema.error)
@@ -38,7 +27,6 @@ router.post("/", checkToken, async (req, res) => {
   let {
     email,
     login,
-    password,
     firstname,
     lastname,
     brithday,
@@ -47,34 +35,42 @@ router.post("/", checkToken, async (req, res) => {
     tumanId,
     viloyatId,
     course,
+    active
   } = req.body;
   try {
-    password = await hash(password);
 
     await global.pool.query(
-      `
-        INSERT INTO student (
-    email, login, password, firstname, lastname,
-    brithday, address, Parent_Name, course, tuman_id, viloyat_id
-) VALUES (
-    $1, $2, $3, $4, $5,
-    $6, $7, $8, $9, $10, $11
-);`,
+      `update student 
+set
+email = $1,
+login = $2,
+firstname = $3,
+lastname = $4,
+brithday = $5,
+address = $6,
+parent_name = $7,
+course = $8,
+viloyat_id = $9,
+tuman_id = $10,
+active = $11
+ where id = $12;
+`,
       [
         email,
         login,
-        password,
         firstname,
         lastname,
         brithday,
         address,
         Parent_Name,
         course,
-        tumanId,
         viloyatId,
+        tumanId,
+        active,
+        req.params.id
       ]
     );
-    res.status(201).send({ created: true });
+    res.status(201).send({ Edited: true });
   } catch (error) {
     if (error.code == "22P02") return res.status(400).send({ error: "DDOS" });
     if (error.code == "23505")
