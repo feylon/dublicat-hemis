@@ -270,25 +270,25 @@ CREATE TABLE student (
 
 
 -- teacher
-create table teacher (
-id bigserial primary key,
-email varchar(500) not null unique,
-login varchar(500) not null unique,
-password varchar(500) not null,
-firstname varchar(500),
-lastname varchar(500),	
-brithday DATE,
-address varchar(500),
-created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-Parent_Name varchar(500),
-profil_url varchar(500),
-state BOOLEAN DEFAULT true,
-viloyat_id integer,
-foreign key (viloyat_id) references  viloyat (id),
-tuman_id integer,
-foreign key (tuman_id) references  tuman (id));
-
-
+CREATE TABLE teacher (
+    id bigserial PRIMARY KEY,
+    email varchar(500) NOT NULL UNIQUE,
+    login varchar(500) NOT NULL UNIQUE,
+    password varchar(500) NOT NULL,
+    firstname varchar(500),
+    lastname varchar(500),
+    brithday DATE CHECK (brithday <= CURRENT_DATE AND brithday > '1920-01-01'),
+    address varchar(500),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Parent_Name varchar(500),
+    profil_url varchar(500),
+    viloyat_id integer,
+    FOREIGN KEY (viloyat_id) REFERENCES viloyat (id),
+    tuman_id integer,
+    FOREIGN KEY (tuman_id) REFERENCES tuman (id),
+    state BOOLEAN DEFAULT true,
+	active BOOLEAN DEFAULT true
+);
 INSERT INTO teacher (email, login, password, firstname, brithday, address, parent_name) VALUES
     ('ali@example.com', 'aliuser', 'pass123', 'Ali', '1980-02-14', '123 Main St', 'Vali'),
     ('vali@example.com', 'valiuser', 'pass234', 'Vali', '1985-05-20', '456 Oak Ave', 'Ali'),
