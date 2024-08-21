@@ -243,6 +243,13 @@ INSERT INTO tuman (id, viloyat_id, name_uz, name_oz, name_ru) VALUES
 (225, 5, 'Ko‘kdala tumani', 'Кўкдала тумани', 'Кукдалинский район');
 
 
+-- GorupName
+create table groupname (
+id bigserial primary key not null unique,
+name varchar(500) not null,
+description varchar(500) default ''	
+);
+-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 -- Student
 CREATE TABLE student (
@@ -263,9 +270,18 @@ CREATE TABLE student (
     tuman_id integer,
     FOREIGN KEY (tuman_id) REFERENCES tuman (id),
     state BOOLEAN DEFAULT true,
-	active BOOLEAN DEFAULT true
+	active BOOLEAN DEFAULT true,
+	groupname_id integer,
+    FOREIGN KEY (groupname_id) REFERENCES groupname (id) 
+	
 );
 
+
+--  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+insert into groupname (id, name, description) values
+(0, 'Not', 'Tartiblanmagan');
 --  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
@@ -330,3 +346,4 @@ insert into dean (email, login, password, firstname, brithday) values
 
 
 -- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+

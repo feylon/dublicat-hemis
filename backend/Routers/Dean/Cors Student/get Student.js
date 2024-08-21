@@ -33,13 +33,18 @@ SELECT
     viloyat.name_uz as viloyat, 
     viloyat.id as viloyat_id, 
     tuman.name_uz as tuman, 
-    tuman.id as tuman_id
+    tuman.id as tuman_id,
+	groupname.name as GroupName,
+	groupname.id as GroupNameID 
+	
 FROM 
     student
 INNER JOIN 
     viloyat ON student.viloyat_id = viloyat.id
 INNER JOIN 
     tuman ON student.tuman_id = tuman.id
+INNER JOIN
+	groupname on student.groupname_id = groupname.id
 WHERE 
     student.firstname LIKE $1 
     AND student.state = true
@@ -98,14 +103,19 @@ SELECT
     viloyat.name_uz as viloyat, 
     viloyat.id as viloyat_id, 
     tuman.name_uz as tuman, 
-    tuman.id as tuman_id
+    tuman.id as tuman_id,
+	groupname.name as GroupName,
+	groupname.id as GroupNameID 
+	
 FROM 
     student
 INNER JOIN 
     viloyat ON student.viloyat_id = viloyat.id
 INNER JOIN 
     tuman ON student.tuman_id = tuman.id
-WHERE 
+INNER JOIN
+	groupname on student.groupname_id = groupname.id
+    WHERE 
     student.lastname LIKE $1 
     AND student.state = true
 	ORDER BY 

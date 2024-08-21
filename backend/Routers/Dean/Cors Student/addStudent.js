@@ -30,6 +30,7 @@ router.post("/", checkToken, async (req, res) => {
     tumanId: Joi.number().min(15).max(225).required(),
     viloyatId: Joi.number().integer().min(1).max(15).required(),
     course: Joi.number().min(1).max(5).required(),
+    groupname_id : Joi.number().integer().min(0).required(),
   });
 
   let checkSchema = Schema.validate(req.body);
@@ -47,6 +48,7 @@ router.post("/", checkToken, async (req, res) => {
     tumanId,
     viloyatId,
     course,
+    groupname_id
   } = req.body;
   try {
     password = await hash(password);
@@ -55,10 +57,10 @@ router.post("/", checkToken, async (req, res) => {
       `
         INSERT INTO student (
     email, login, password, firstname, lastname,
-    brithday, address, Parent_Name, course, tuman_id, viloyat_id
+    brithday, address, Parent_Name, course, tuman_id, viloyat_id, groupname_id
 ) VALUES (
     $1, $2, $3, $4, $5,
-    $6, $7, $8, $9, $10, $11
+    $6, $7, $8, $9, $10, $11, $12
 );`,
       [
         email,
@@ -72,6 +74,7 @@ router.post("/", checkToken, async (req, res) => {
         course,
         tumanId,
         viloyatId,
+        groupname_id
       ]
     );
     res.status(201).send({ created: true });
@@ -90,7 +93,8 @@ router.post("/", checkToken, async (req, res) => {
           error:
             "Tug'ilgan kun bugungi kundan oshib ketmasligi va 1920 y. dan doim katta bo'lishi lozim",
         });
-
+        if (error.code == "23503")
+          return res.status(400).send({ error: error.detail });
     console.log(error);
   }
 });
